@@ -46,7 +46,7 @@ export default function Slapukai() {
       <div className="flex items-center">
         <div className="flex flex-wrap justify-end gap-y-2 gap-x-4">
           <Link
-            href="/"
+            href="/privacy-policy"
             className="text-sm text-gray-600 duration-75 hover:text-green-700"
           >
             Privatumo politika
@@ -72,7 +72,7 @@ export default function Slapukai() {
             <p className="text-gray-700">
               Ši svetainė naudoja slapukus, kad užtikrintų geriausią patirtį
               svetainėje.
-              <Link href="/">
+              <Link href="/privacy-policy">
                 <span className="dark:hover:text-site-primary pl-1 underline hover:text-green-700">
                   Sužinokite daugiau apie slapuku politiką
                 </span>
