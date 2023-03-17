@@ -23,13 +23,11 @@ export default async function Page({ params: { slug } }) {
       <div className="bg-white">
         <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 py-12 md:grid-cols-12 md:px-6">
           {edges.map((post, index) => {
-            if (index > 1) {
-              return (
-                <div key={index} className="md:col-span-6 lg:col-span-4">
-                  <Post post={post} background={false} />
-                </div>
-              )
-            }
+            return (
+              <div key={index} className="md:col-span-6 lg:col-span-4">
+                <Post post={post} background={false} />
+              </div>
+            )
           })}
         </div>
 

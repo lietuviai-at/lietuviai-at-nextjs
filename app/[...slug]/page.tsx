@@ -61,9 +61,11 @@ export default async function PostPage({ params: { slug } }: any) {
         )}
       </header>
       <div className="bg-white">
-        <section className="prose prose-neutral mx-auto w-full max-w-screen-md gap-4 space-y-2 py-14 px-4 text-black md:px-8">
-          {parseHTML(data.content)}
-        </section>
+        {data.content && (
+          <section className="prose prose-neutral mx-auto w-full max-w-screen-md gap-4 space-y-2 py-14 px-4 text-black md:px-8">
+            {parseHTML(data.content)}
+          </section>
+        )}
         <footer className="mx-auto flex max-w-screen-lg flex-col px-4 md:px-8">
           <div className="border-t-2 border-dashed border-gray-200">
             <div className="mx-auto flex max-w-screen-sm flex-col items-center gap-14 py-14">

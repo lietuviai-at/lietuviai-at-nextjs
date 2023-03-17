@@ -461,3 +461,29 @@ export async function getTagPosts(slug: string | string[]): Promise<{
     return { status: "failure", data: null }
   return { status: "success", data }
 }
+
+export async function getAllEvents(): Promise<{
+  status: "success" | "failure"
+  data: any | null
+}> {
+  const data = await fetchAPI(`
+    {
+      posts(where: {categoryName: "renginiai"}) {
+        edges {
+          node {
+            id
+            uri
+            title
+            event_info {
+              eventDate
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  if (data === null || data.posts === null)
+    return { status: "failure", data: null }
+  return { status: "success", data }
+}

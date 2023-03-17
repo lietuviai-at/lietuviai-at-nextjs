@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import {
   addDays,
   addMonths,
@@ -20,8 +21,9 @@ import { lt } from "date-fns/locale"
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
 
 export type CalEvent = {
+  id: string
   title: string
-  date: string
+  date: string | null
   link: string
 }
 
@@ -77,25 +79,37 @@ export default function EventsCalendar({ events }: { events: CalEvent[] }) {
     return <div className="hidden grid-cols-7 gap-4 md:grid">{weekDays}</div>
   }
 
-  const getEvent = (currentDate: Date, matchingEvents: CalEvent[]) => {
+  const getEvents = (
+    currentDate: Date,
+    matchingEvents: CalEvent[],
+    boolean: boolean = false
+  ) => {
     const events = matchingEvents.filter((event) => {
       return isSameDay(currentDate, new Date(event.date))
     })
 
-    if (!events) {
+    if (!events || events.length === 0) {
+      if (boolean) {
+        return false
+      }
       return null
+    }
+
+    if (boolean) {
+      return true
     }
 
     return (
       <>
         {events.map((event, index) => {
           return (
-            <div
-              key={`${event.date}-${index}`}
-              className="border-t-2 border-dashed py-1 px-2 text-sm"
+            <Link
+              key={`${event.id}`}
+              href={event.link}
+              className="border-t-2 border-dashed border-green-600 border-opacity-60 py-1 px-2 text-sm hover:bg-green-700 hover:bg-opacity-30 hover:text-green-800"
             >
               {event.title}
-            </div>
+            </Link>
           )
         })}
       </>
@@ -113,18 +127,28 @@ export default function EventsCalendar({ events }: { events: CalEvent[] }) {
       week.push(
         <div
           key={format(currentDate, "T")}
-          className={`rounded-md border-2 border-dashed md:min-h-[6rem]
+          className={`flex flex-col rounded-md border-2 md:min-h-[6rem]
           ${
             isSameMonth(currentDate, activeDate)
               ? ""
-              : "hidden text-gray-300 md:block"
+              : "hidden text-gray-300 opacity-0 md:block"
           }
-          ${!isBefore(currentDate, new Date()) ? "" : "text-gray-300 md:block"}
+          ${
+            !isBefore(currentDate, new Date())
+              ? ""
+              : "border-opacity-40 text-gray-300 md:block"
+          }
           ${
             isSameDay(currentDate, new Date())
               ? "border-green-600 border-opacity-40"
               : ""
-          }`}
+          }
+          ${
+            getEvents(currentDate, matchingEvents, true)
+              ? "border-green-600 border-opacity-60 bg-green-600 bg-opacity-10"
+              : "border-dashed bg-white bg-opacity-25"
+          }
+          `}
         >
           <div className="py-1 px-2">
             <span className="pr-1 capitalize md:hidden">
@@ -132,7 +156,7 @@ export default function EventsCalendar({ events }: { events: CalEvent[] }) {
             </span>
             {format(currentDate, "d", { locale: lt })}
           </div>
-          {getEvent(currentDate, matchingEvents)}
+          {getEvents(currentDate, matchingEvents)}
         </div>
       )
       currentDate = addDays(currentDate, 1)
