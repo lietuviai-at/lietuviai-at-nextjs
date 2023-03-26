@@ -1,6 +1,13 @@
 import MorePosts from "@/components/MorePosts"
 import { getCategoryPosts } from "@/lib/api"
 import { Post } from "../../post"
+import { Metadata } from "next/types"
+
+export async function generateMetadata({
+  params: { slug },
+}: any): Promise<Metadata> {
+  return { title: `Kategorija: ${slug} | ALB` }
+}
 
 export default async function Page({ params: { slug } }) {
   const {

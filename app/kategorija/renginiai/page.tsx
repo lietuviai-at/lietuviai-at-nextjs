@@ -2,6 +2,11 @@ import { getAllEvents, getCategoryPosts } from "@/lib/api"
 import EventsCalendar from "./eventsCalendar"
 import MorePosts from "@/components/MorePosts"
 import { Post } from "../../post"
+import { Metadata } from "next/types"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: `Renginiai | ALB` }
+}
 
 export default async function Renginiai() {
   const {

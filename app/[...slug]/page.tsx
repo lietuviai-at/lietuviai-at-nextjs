@@ -5,6 +5,18 @@ import { lt } from "date-fns/locale"
 import parseHTML from "html-react-parser"
 import ShareIt from "@/components/shared/Share-It"
 import Link from "next/link"
+import { Metadata } from "next/types"
+import striptags from "striptags"
+
+export async function generateMetadata({
+  params: { slug },
+}: any): Promise<Metadata> {
+  const data = await getContent(slug)
+  return {
+    title: `${data.data.contentNode.title} |  ALB`,
+    description: striptags(data.data.contentNode.excerpt) || null,
+  }
+}
 
 export default async function PostPage({ params: { slug } }: any) {
   const {

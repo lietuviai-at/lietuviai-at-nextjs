@@ -23,6 +23,7 @@ export const metadata = {
   title: "Austrijos Lietuvių Bendruomenė",
   description:
     "Savanoriška, nevyriausybinė, politiškai neutrali, ne pelno siekianti organizacija, siekianti vienyti ir bendrai veiklai telkti Austrijoje gyvenančius lietuvius bei Lietuvos draugus.",
+  icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
 }
 
 export default function RootLayout({
