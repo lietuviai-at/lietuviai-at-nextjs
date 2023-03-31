@@ -4,6 +4,8 @@ import MorePosts from "@/components/MorePosts"
 import { Post } from "../../post"
 import { Metadata } from "next/types"
 
+export const revalidate = 30
+
 export async function generateMetadata(): Promise<Metadata> {
   return { title: `Renginiai | ALB` }
 }
@@ -27,7 +29,7 @@ export default async function Renginiai() {
       </header>
 
       <div className="bg-light-background-transparent">
-        <div className="mx-auto flex max-w-screen-2xl flex-col gap-12 px-4 pt-2 pb-12 md:px-6 md:pt-4">
+        <div className="mx-auto flex max-w-screen-2xl flex-col gap-12 px-4 pb-12 pt-2 md:px-6 md:pt-4">
           {events.status === "success" && (
             <EventsCalendar
               events={events.data.posts.edges.map((event: any) => {

@@ -2,6 +2,8 @@ import MorePosts from "@/components/MorePosts"
 import { getRecentPosts } from "@/lib/api"
 import { Post } from "./post"
 
+export const revalidate = 10
+
 export default async function Home() {
   const {
     data: {
@@ -12,7 +14,7 @@ export default async function Home() {
   return (
     <main>
       <div className="bg-light-background-transparent">
-        <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 pt-2 pb-12 md:grid-cols-12 md:px-6 md:pt-4">
+        <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 pb-12 pt-2 md:grid-cols-12 md:px-6 md:pt-4">
           {edges.map((post, index) => {
             if (index <= 1) {
               return (

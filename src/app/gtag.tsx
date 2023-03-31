@@ -32,14 +32,14 @@ export default function Gtag() {
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-K2D854F');
+            })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GA_ID}');
           `,
         }}
       />
 
       <noscript>
         <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-K2D854F"
+          src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_DOMAIN}`}
           height="0"
           width="0"
           className="hidden"

@@ -3,6 +3,8 @@ import { getCategoryPosts } from "@/lib/api"
 import { Post } from "../../post"
 import { Metadata } from "next/types"
 
+export const revalidate = 10
+
 export async function generateMetadata({
   params: { slug },
 }: any): Promise<Metadata> {
@@ -19,7 +21,7 @@ export default async function Page({ params: { slug } }) {
   return (
     <main>
       <header className="bg-light-background-transparent">
-        <div className="mx-auto flex max-w-screen-md flex-col items-center px-4 pt-8 pb-12 text-center md:px-8">
+        <div className="mx-auto flex max-w-screen-md flex-col items-center px-4 pb-12 pt-8 text-center md:px-8">
           <h1 className="max-w-3xl pb-6 text-2xl font-medium md:text-3xl xl:text-4xl">
             Kategorija
           </h1>

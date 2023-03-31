@@ -7,26 +7,30 @@ import Cookies from "js-cookie"
 export default function Slapukai() {
   const [open, setOpen] = useState(false)
   const [openSettings, setOpenSettings] = useState(false)
-  const [performanceCookies, setPerformanceCookies] = useState(false)
+  const [performanceCookies, setPerformanceCookies] = useState(
+    Cookies.get("consent") === "granted" ? true : false || false
+  )
   const consentRef = createRef<HTMLInputElement>()
 
   const handleAllAccept = () => {
     // @ts-ignore
     gtag("consent", "update", {
-      //ad_storage: 'denied',
+      ad_storage: "denied",
       analytics_storage: "granted",
     })
-    Cookies.set("consent", "granted", { expires: 182 })
+    setPerformanceCookies(true)
+    Cookies.set("consent", "granted", { expires: 365 })
     setOpen(false)
   }
 
   const handleAllReject = () => {
     // @ts-ignore
     gtag("consent", "update", {
-      // ad_storage: 'denied',
+      ad_storage: "denied",
       analytics_storage: "denied",
     })
-    Cookies.set("consent", "denied", { expires: 182 })
+    setPerformanceCookies(false)
+    Cookies.set("consent", "denied", { expires: 31 })
     setOpen(false)
   }
 
@@ -36,6 +40,11 @@ export default function Slapukai() {
 
   useEffect(() => {
     const consent = Cookies.get("consent")
+
+    if (consent && consent === "granted") {
+      handleAllAccept()
+    }
+
     if (!consent) {
       setOpen(true)
     }
@@ -44,7 +53,7 @@ export default function Slapukai() {
   return (
     <>
       <div className="flex items-center">
-        <div className="flex flex-wrap justify-end gap-y-2 gap-x-4">
+        <div className="flex flex-wrap justify-end gap-x-4 gap-y-2">
           <Link
             href="/privacy-policy"
             className="text-sm text-gray-600 duration-75 hover:text-green-700"
@@ -82,13 +91,13 @@ export default function Slapukai() {
           </div>
           <div className="flex w-full flex-col gap-2 md:flex-row">
             <button
-              className="grow rounded-full border-2 border-gray-300 bg-gray-100 py-2 px-4 text-black hover:border-green-700 hover:bg-green-600"
+              className="grow rounded-full border-2 border-gray-300 bg-gray-100 px-4 py-2 text-black hover:border-green-700 hover:bg-green-600"
               onClick={handleAllAccept}
             >
               Aš sutinku su slapuku politika
             </button>
             <button
-              className="rounded-full border-2 border-gray-300 bg-gray-100 py-2 px-4 text-black hover:border-red-700 hover:bg-red-500"
+              className="rounded-full border-2 border-gray-300 bg-gray-100 px-4 py-2 text-black hover:border-red-700 hover:bg-red-500"
               onClick={handleAllReject}
             >
               Aš nesutinku
@@ -96,14 +105,14 @@ export default function Slapukai() {
 
             {openSettings ? (
               <button
-                className="hover:bg-orange rounded-full border-2 border-gray-300 bg-gray-100 py-2 px-4 text-black hover:bg-gray-300"
+                className="hover:bg-orange rounded-full border-2 border-gray-300 bg-gray-100 px-4 py-2 text-black hover:bg-gray-300"
                 onClick={handelSaveSettings}
               >
                 Išsaugoti nustatymus
               </button>
             ) : (
               <button
-                className="hover:bg-orange rounded-full border-2 border-gray-300 bg-gray-100 py-2 px-4 text-black hover:bg-gray-300"
+                className="hover:bg-orange rounded-full border-2 border-gray-300 bg-gray-100 px-4 py-2 text-black hover:bg-gray-300"
                 onClick={() => setOpenSettings(!openSettings)}
               >
                 Noriu pasirinkti, su kuo sutinku

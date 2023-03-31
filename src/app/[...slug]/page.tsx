@@ -8,6 +8,8 @@ import Link from "next/link"
 import { Metadata } from "next/types"
 import striptags from "striptags"
 
+export const revalidate = 10
+
 export async function generateMetadata({
   params: { slug },
 }: any): Promise<Metadata> {
@@ -27,7 +29,7 @@ export default async function PostPage({ params: { slug } }: any) {
   return (
     <article>
       <header className="bg-light-background-transparent">
-        <div className="mx-auto flex max-w-screen-md flex-col items-center px-4 pt-8 pb-12 text-center md:px-8">
+        <div className="mx-auto flex max-w-screen-md flex-col items-center px-4 pb-12 pt-8 text-center md:px-8">
           {data.categories && data.categories.nodes.length !== 0 && (
             <div className="flex items-center gap-4 pb-4">
               {data.categories.nodes.map((category: any, index: number) => {
@@ -74,7 +76,7 @@ export default async function PostPage({ params: { slug } }: any) {
       </header>
       <div className="bg-white">
         {data.content && (
-          <section className="prose prose-neutral mx-auto w-full max-w-screen-md gap-4 space-y-2 py-14 px-4 text-black md:px-8">
+          <section className="prose prose-neutral mx-auto w-full max-w-screen-md gap-4 space-y-2 px-4 py-14 text-black md:px-8">
             {parseHTML(data.content)}
           </section>
         )}
@@ -90,7 +92,7 @@ export default async function PostPage({ params: { slug } }: any) {
                         <a
                           key={tag.id}
                           href={tag.uri}
-                          className="rounded-full bg-gray-100 py-2 px-4 text-sm decoration-gray-300 outline-1 outline-green-600 hover:text-green-700 focus:outline-green-700 active:outline-green-600"
+                          className="rounded-full bg-gray-100 px-4 py-2 text-sm decoration-gray-300 outline-1 outline-green-600 hover:text-green-700 focus:outline-green-700 active:outline-green-600"
                         >
                           {tag.name}
                         </a>
