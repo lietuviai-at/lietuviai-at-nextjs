@@ -47,7 +47,7 @@ export default function RootLayout({
           {children}
 
           <div className="bg-light-background-transparent">
-            <div className="mx-auto flex max-w-screen-2xl justify-between gap-8 px-4 md:px-8">
+            <div className="mx-auto flex max-w-screen-2xl justify-between gap-8 px-4 md:px-6">
               <p className="py-8 text-sm text-gray-500">
                 {format(new Date(), "yyyy")} &copy; Austrijos lietuvių
                 bendruomenė

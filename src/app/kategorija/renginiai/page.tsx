@@ -3,6 +3,7 @@ import EventsCalendar from "./eventsCalendar"
 import MorePosts from "@/components/MorePosts"
 import { Post } from "../../post"
 import { Metadata } from "next/types"
+import Error from "@/components/shared/Error"
 
 export const revalidate = 30
 
@@ -18,8 +19,8 @@ export default async function Renginiai() {
     return (
       <main>
         <div className="bg-light-background-transparent">
-          <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 pb-12 pt-2 md:grid-cols-12 md:px-6 md:pt-4">
-            Problema
+          <div className="mx-auto max-w-screen-2xl items-center px-4 pb-12 pt-2 md:px-6 md:pt-4">
+            <Error message="Nepavyko gauti informacijos iš duomenų bazės." />
           </div>
         </div>
       </main>

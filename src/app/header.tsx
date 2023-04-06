@@ -7,7 +7,7 @@ export default async function Header() {
   return (
     <div className="px-4 py-4">
       <div className="relative overflow-visible rounded-lg bg-white shadow-normal">
-        {status === "success" && <Navigation data={data} />}
+        <Navigation data={data} />
       </div>
     </div>
   )

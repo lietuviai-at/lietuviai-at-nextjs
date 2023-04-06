@@ -5,7 +5,7 @@ import { Fragment, useRef, useState } from "react"
 import Link from "next/link"
 import { Menu, Transition } from "@headlessui/react"
 
-export default function Navigation({ data }: { data: manuItem[] }) {
+export default function Navigation({ data }: { data: manuItem[] | null }) {
   const [navOpen, setNavOpen] = useState(false)
 
   const DropDown = ({ subItems }: { subItems: manuItem[] }) => {
@@ -81,7 +81,7 @@ export default function Navigation({ data }: { data: manuItem[] }) {
                                 : "text-gray-700"
                             }`}
                           >
-                            <div className="py-3 px-4 decoration-2 underline-offset-2 hover:bg-yellow-500 hover:text-white hover:underline-offset-2">
+                            <div className="px-4 py-3 decoration-2 underline-offset-2 hover:bg-yellow-500 hover:text-white hover:underline-offset-2">
                               {item.title}
                             </div>
                           </Link>
@@ -99,8 +99,6 @@ export default function Navigation({ data }: { data: manuItem[] }) {
   }
 
   const BigScreenNav = () => {
-    if (!data) return <div>Nepavyko įkelti svetainės navigacijos</div>
-
     return (
       <div className="flex flex-wrap items-center justify-end gap-x-1">
         {data.map((mainItem) => {
@@ -165,7 +163,7 @@ export default function Navigation({ data }: { data: manuItem[] }) {
   }
 
   return (
-    <div className="mx-auto flex max-w-screen-2xl flex-col gap-4 py-4 px-4 md:py-8 md:px-8">
+    <div className="mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-4 md:px-8 md:py-8">
       <div className="flex items-center justify-between gap-8">
         <div className="flex w-60 items-center gap-2 xs:w-auto lg:min-w-[440px]">
           <Link href="/" onClick={() => setNavOpen(false)}>
@@ -192,7 +190,11 @@ export default function Navigation({ data }: { data: manuItem[] }) {
           {/*</button>*/}
 
           <div className="hidden lg:flex">
-            <BigScreenNav />
+            {!data ? (
+              <div>Nepavyko įkelti svetainės navigacijos</div>
+            ) : (
+              <BigScreenNav />
+            )}
           </div>
 
           <button
@@ -216,9 +218,13 @@ export default function Navigation({ data }: { data: manuItem[] }) {
 
       {/* Mobile navigation */}
       {navOpen && (
-        <div className="flex border-t-2 border-dashed bg-white pt-4 pb-2 lg:hidden">
+        <div className="flex border-t-2 border-dashed bg-white pb-2 pt-4 lg:hidden">
           <div className="gap2 flex w-full flex-col items-end">
-            <SmallScreenNav />
+            {!data ? (
+              <div>Nepavyko įkelti svetainės navigacijos</div>
+            ) : (
+              <SmallScreenNav />
+            )}
           </div>
         </div>
       )}
