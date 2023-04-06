@@ -8,23 +8,37 @@ import Link from "next/link"
 import { Metadata } from "next/types"
 import striptags from "striptags"
 
-export const revalidate = 10
+export const revalidate = 0
 
 export async function generateMetadata({
   params: { slug },
 }: any): Promise<Metadata> {
-  const data = await getContent(slug)
+  const { status, data } = await getContent(slug)
+  if (status === "failure") {
+    return null
+  }
   return {
-    title: `${data.data.contentNode.title} |  ALB`,
-    description: striptags(data.data.contentNode.excerpt) || null,
+    title: `${data.contentNode.title} |  ALB`,
+    description: striptags(data.contentNode.excerpt) || null,
   }
 }
 
 export default async function PostPage({ params: { slug } }: any) {
-  const {
-    status,
-    data: { contentNode: data },
-  } = await getContent(slug)
+  const { status, data: dataRes } = await getContent(slug)
+
+  if (status === "failure") {
+    return (
+      <main>
+        <div className="bg-light-background-transparent">
+          <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 pb-12 pt-2 md:grid-cols-12 md:px-6 md:pt-4">
+            Problema
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  const { contentNode: data } = dataRes
 
   return (
     <article>

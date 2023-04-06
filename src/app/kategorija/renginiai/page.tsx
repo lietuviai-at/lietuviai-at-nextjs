@@ -11,12 +11,22 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Renginiai() {
-  const {
-    data: {
-      posts: { edges, pageInfo },
-    },
-  } = await getCategoryPosts("renginiai")
+  const { status, data } = await getCategoryPosts("renginiai")
   const events = await getAllEvents()
+
+  if (status === "failure") {
+    return (
+      <main>
+        <div className="bg-light-background-transparent">
+          <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 pb-12 pt-2 md:grid-cols-12 md:px-6 md:pt-4">
+            Problema
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  const { edges, pageInfo } = data
 
   return (
     <main>
@@ -32,7 +42,7 @@ export default async function Renginiai() {
         <div className="mx-auto flex max-w-screen-2xl flex-col gap-12 px-4 pb-12 pt-2 md:px-6 md:pt-4">
           {events.status === "success" && (
             <EventsCalendar
-              events={events.data.posts.edges.map((event: any) => {
+              events={events.data.edges.map((event: any) => {
                 return {
                   id: event.node.id,
                   title: event.node.title,

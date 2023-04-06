@@ -9,22 +9,26 @@ async function fetchAPI(query = "", { variables }: Record<string, any> = {}) {
   //   ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
   // }
 
-  // WPGraphQL Plugin must be enabled
-  const res = await fetch(API_URL, {
-    headers,
-    method: "POST",
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
-  })
+  try {
+    // WPGraphQL Plugin must be enabled
+    const res = await fetch(API_URL, {
+      headers,
+      method: "POST",
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    })
 
-  const json = await res.json()
-  if (json.errors) {
-    console.error(json.errors)
-    //throw new Error('Failed to fetch API')
+    const json = await res.json()
+    if (json.errors) {
+      console.error(json.errors)
+      //throw new Error('Failed to fetch API')
+    }
+    return json.data
+  } catch (error) {
+    return null
   }
-  return json.data
 }
 
 export type manuItem = {
@@ -64,7 +68,10 @@ const flatListToHierarchical = (
 }
 
 // Reference https://www.wpgraphql.com/docs/menus
-export async function getMainNavigationMenu() {
+export async function getMainNavigationMenu(): Promise<{
+  status: "success" | "failure"
+  data: any | null
+}> {
   const data = await fetchAPI(`
     {
       menuItems(where: {location: PRIMARY_NAVIGATION}, first: 50) {
@@ -78,7 +85,14 @@ export async function getMainNavigationMenu() {
     }
   `)
 
-  return flatListToHierarchical(data.menuItems.nodes)
+  if (data === null) {
+    return { status: "failure", data: null }
+  }
+
+  return {
+    status: "success",
+    data: flatListToHierarchical(data.menuItems.nodes),
+  }
 }
 
 export async function getAllPostsWithSlug() {
@@ -174,8 +188,11 @@ export async function getContent(
     }
   `)
 
-  if (data.contentNode) return { status: "success", data }
-  return { status: "failure", data: null }
+  if (data === null) {
+    return { status: "failure", data: null }
+  }
+
+  return { status: "success", data }
 
   // if (data === null || data.post === null)
   //   return { status: 'failure', data: null }
@@ -240,7 +257,7 @@ export async function getRecentPosts(): Promise<{
 
   if (data === null || data.posts === null)
     return { status: "failure", data: null }
-  return { status: "success", data }
+  return { status: "success", data: data.posts }
 }
 
 export async function getMoreRecentPosts(lastpost: any): Promise<{
@@ -380,7 +397,7 @@ export async function getCategoryPosts(slug: string | string[]): Promise<{
 
   if (data === null || data.posts === null)
     return { status: "failure", data: null }
-  return { status: "success", data }
+  return { status: "success", data: data.posts }
 }
 
 export async function getAllTagPostsSlug(slug: string | string[]) {
@@ -459,7 +476,7 @@ export async function getTagPosts(slug: string | string[]): Promise<{
 
   if (data === null || data.posts === null)
     return { status: "failure", data: null }
-  return { status: "success", data }
+  return { status: "success", data: data.posts }
 }
 
 export async function getAllEvents(): Promise<{
@@ -485,5 +502,5 @@ export async function getAllEvents(): Promise<{
 
   if (data === null || data.posts === null)
     return { status: "failure", data: null }
-  return { status: "success", data }
+  return { status: "success", data: data.posts }
 }

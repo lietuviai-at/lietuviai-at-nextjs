@@ -5,11 +5,21 @@ import { Post } from "./post"
 export const revalidate = 10
 
 export default async function Home() {
-  const {
-    data: {
-      posts: { edges, pageInfo },
-    },
-  } = await getRecentPosts()
+  const { status, data } = await getRecentPosts()
+
+  if (status === "failure") {
+    return (
+      <main>
+        <div className="bg-light-background-transparent">
+          <div className="mx-auto grid max-w-screen-2xl gap-12 px-4 pb-12 pt-2 md:grid-cols-12 md:px-6 md:pt-4">
+            Problema
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  const { edges, pageInfo } = data
 
   return (
     <main>
