@@ -128,7 +128,10 @@ export default async function PostPage({ params: { slug } }: any) {
             <div className="border-t-2 border-dashed border-gray-200 py-14">
               <div className="mx-auto flex max-w-screen-md gap-8 px-4 md:px-8">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-light-background-transparent">
-                  {data.author.node.name.match(/\b(\w)/g).join("")}
+                  {data.author.node.name
+                    .split(" ")
+                    .map((word: string) => word.charAt(0))
+                    .join("")}
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-gray-500">Publikavo:</p>
