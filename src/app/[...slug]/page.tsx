@@ -19,8 +19,8 @@ export async function generateMetadata({
     return null
   }
   return {
-    title: `${data.contentNode.title} |  ALB`,
-    description: striptags(data.contentNode.excerpt) || null,
+    title: `${data.contentNode?.title || null} |  ALB`,
+    description: striptags(data.contentNode?.excerpt) || null,
   }
 }
 
@@ -40,6 +40,18 @@ export default async function PostPage({ params: { slug } }: any) {
   }
 
   const { contentNode: data } = dataRes
+
+  if (!data) {
+    return (
+      <main>
+        <div className="bg-light-background-transparent">
+          <div className="mx-auto max-w-screen-2xl items-center px-4 pb-12 pt-2 md:px-6 md:pt-4">
+            <Error message="Puslapis nerastas." />
+          </div>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <article>
