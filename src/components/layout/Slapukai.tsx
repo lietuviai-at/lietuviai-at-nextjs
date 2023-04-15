@@ -52,8 +52,8 @@ export default function Slapukai() {
 
   return (
     <>
-      <div className="flex items-center">
-        <div className="flex flex-wrap justify-end gap-x-4 gap-y-2">
+      <div className="block">
+        <div className="flex flex-wrap justify-end gap-x-8 gap-y-2">
           <Link
             href="/privacy-policy"
             className="text-sm text-gray-600 duration-75 hover:text-green-700"

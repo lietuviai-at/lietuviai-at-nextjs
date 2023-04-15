@@ -46,13 +46,43 @@ export default function RootLayout({
 
           {children}
 
-          <div className="bg-light-background-transparent">
-            <div className="mx-auto flex max-w-screen-2xl justify-between gap-8 px-4 md:px-6">
-              <p className="py-8 text-sm text-gray-500">
+          <div className="bg-light-background-transparent py-8">
+            <div className="mx-auto flex max-w-screen-2xl justify-between gap-8 px-4 md:items-center md:px-6">
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-2 md:flex-row">
+                <p className="hidden text-sm text-gray-500 md:block">
+                  {format(new Date(), "yyyy")} &copy; Austrijos lietuvių
+                  bendruomenė
+                </p>
+
+                <a
+                  href="https://wordpress.lietuviai.at/admin"
+                  rel="noopener noreferrer"
+                  className="mr-auto inline-flex items-center gap-1 text-sm text-gray-600 duration-75 hover:text-green-700"
+                >
+                  Prisijungti
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <Slapukai />
+            </div>
+            <div className="px-4 pt-8 text-center md:hidden">
+              <p className="text-sm text-gray-500">
                 {format(new Date(), "yyyy")} &copy; Austrijos lietuvių
                 bendruomenė
               </p>
-              <Slapukai />
             </div>
           </div>
         </div>
