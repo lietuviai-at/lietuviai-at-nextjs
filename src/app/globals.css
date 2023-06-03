@@ -20,7 +20,6 @@ h1 {
 .ring-loader {
   --uib-size: 24px;
   --uib-speed: 2s;
-  --uib-color: black;
 
   height: var(--uib-size);
   width: var(--uib-size);
@@ -31,7 +30,7 @@ h1 {
 
 .ring-loader circle {
   fill: none;
-  stroke: var(--uib-color);
+  stroke: currentColor;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   stroke-linecap: round;
@@ -56,4 +55,18 @@ h1 {
   100% {
     stroke-dashoffset: -124px;
   }
+}
+
+.color-change {
+  animation: color-change 4.5s infinite;
+}
+
+@keyframes color-change {
+  0% { color: #ffb617; }
+  33% { color: #ffb617; }
+  36% { color: #467523; }
+  66% { color: #467523; }
+  69% { color: #d0112b; }
+  96% { color: #d0112b; }
+  100% { color: #ffb617; }
 }

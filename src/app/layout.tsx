@@ -4,7 +4,7 @@ import Header from "./header"
 import { format } from "date-fns"
 import "./globals.css"
 
-export const revalidate = 60
+export const revalidate = 30
 
 import { Literata, Noto_Sans } from "next/font/google"
 
